@@ -1,5 +1,6 @@
 defmodule Endpoint.Path do
   use GenServer
+  require Logger
 
   @template "index.html.eex"
 
@@ -12,16 +13,8 @@ defmodule Endpoint.Path do
   end
 
   def run(args) do
-    deserialized = deserialize(args)
-    result       = EEx.eval_file(@template, [whoami: Node.self])
-    serialize(result)
-  end
-
-
-  defp serialize(terms) do
-    :erlang.term_to_binary(terms)
-  end
-  defp deserialize(bin) do
-    :erlang.binary_to_term(bin)
+    # do something with params
+    query_params = args
+    EEx.eval_file(@template, [whoami: Node.self])
   end
 end
